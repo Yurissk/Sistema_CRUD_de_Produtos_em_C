@@ -11,41 +11,11 @@ void limparBufferDeEntrada()
         ;
 }
 
-void pagamentoDinheiro(double valorCompra)
-{
-    double valorPago = 0.0;
-    double troco = 0.0;
-    int op;
-
-    printf("\nPrecisa de troco?\n");
-    printf("1 - Sim\n");
-    printf("2 - Nao\n");
-    scanf("%d", &op);
-
-    if (op == 1)
-    {
-        printf("Digite o valor pago:\nR$ ");
-        scanf("%lf", &valorPago);
-        limparBufferDeEntrada();
-
-        troco = valorPago - valorCompra;
-
-        if (troco < 0)
-            printf("\nValor pago insuficiente! Falta R$ %.2lf\n", -troco);
-        else
-            printf("\n*** TROCO: R$ %.2lf ***\n", troco);
-    }
-    else
-    {
-        printf("\nPagamento exato recebido. Sem troco.\n");
-    }
-}
-
 struct produto
 {
     char nome[50];
     double preco;
-    int ref;
+    int ref[4];
     int quantidade;
 };
 
@@ -54,7 +24,6 @@ void cadastrarProduto(struct produto *produtos, int *total)
     int opcao;
     do
     {
-        printf("\n=== MENU DE CADASTRO DE PRODUTOS ===\n");
         printf("1 - Adicionar novo produto\n");
         printf("2 - Sair para o Menu principal\n");
         printf("Escolha: ");
@@ -104,6 +73,92 @@ void listarProdutos(struct produto *produtos, int *total){
     }
 }
 
+void editarProdutos(struct produto *produtos, int *total){
+    int escolhaProduto;
+
+    for(int i = 0; i < *total; i++){
+        printf("Produto: %d", i);
+        printf("Nome: %s\n", produtos[i].nome);
+        printf("Referencia: %d\n", produtos[i].ref);
+    }
+
+    printf("\nSelecione o produto por indice que deseja editar: \n");
+    scanf("%d", &escolhaProduto);
+    limparBufferDeEntrada();
+
+    if (escolhaProduto >= 0 && escolhaProduto < *total)
+    {   
+        int escolhaEdicao;
+        printf("Você escolheu o produto: %d - %s\n Quantidade: %d\n Preco: %f", produtos[escolhaProduto].ref, 
+        produtos[escolhaProduto].nome, 
+        produtos[escolhaProduto].quantidade, 
+        produtos[escolhaProduto].preco);
+
+        printf("\n");
+        printf("O que deseja atualizar?\n 1. Nome \n 2. Quantidade \n 3. Preco \n 4. ref \n 5. Editar todos");
+        scanf("%d", &escolhaEdicao);
+        limparBufferDeEntrada();
+
+
+        switch (escolhaEdicao)
+        {
+        case 1:
+            printf("Nome atual: %s\n", produtos[escolhaProduto].nome);
+            printf("Novo nome: \n");
+            fgets(produtos[escolhaProduto].nome, sizeof(produtos[escolhaProduto].nome), stdin);
+            produtos[escolhaProduto].nome[strcspn(produtos[escolhaProduto].nome, "\n")] = '\0';
+
+            break;
+        case 2:
+            printf("Quantidade atual: %d\n", produtos[escolhaProduto].quantidade);
+            printf("Nova quantidade: \n");
+            scanf("%d", &produtos[escolhaProduto].quantidade);
+            limparBufferDeEntrada(); 
+            break;
+        case 3:
+            printf("Preco atual: %f\n", produtos[escolhaProduto].preco);
+            printf("Novo preco: \n");
+            scanf("%lf", &produtos[escolhaProduto].preco);
+            limparBufferDeEntrada(); 
+            break;
+        case 4:
+            printf("REF atual: %d\n", produtos[escolhaProduto].ref);
+            printf("Nova REF: \n");
+            scanf("%d", &produtos[escolhaProduto].ref);
+            limparBufferDeEntrada(); 
+            break;
+        case 5:
+            printf("Nome atual: %s\n", produtos[escolhaProduto].nome);
+            printf("Novo nome: \n");
+            fgets(produtos[escolhaProduto].nome, sizeof(produtos[escolhaProduto].nome), stdin);
+            produtos[escolhaProduto].nome[strcspn(produtos[escolhaProduto].nome, "\n")] = '\0';
+
+            printf("Quantidade atual: %d\n", produtos[escolhaProduto].quantidade);
+            printf("Nova quantidade: \n");
+            scanf("%d", &produtos[escolhaProduto].quantidade);
+            limparBufferDeEntrada(); 
+
+            printf("Preco atual: %f\n", produtos[escolhaProduto].preco);
+            printf("Novo preco: \n");
+            scanf("%lf", &produtos[escolhaProduto].preco);
+            limparBufferDeEntrada(); 
+
+            printf("REF atual: %d\n", produtos[escolhaProduto].ref);
+            printf("Nova REF: \n");
+            scanf("%d", &produtos[escolhaProduto].ref);
+            limparBufferDeEntrada(); 
+            break;
+        
+        default:
+        printf("Opcao invalida.\n");
+            break;
+        }
+    } else {
+        printf("Opcao invalida.\n");
+    }
+
+}
+
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
@@ -115,13 +170,9 @@ int main()
 
     do
     {
-        printf("\n==============================\n");
-        printf("  SUPERMERCADO C - MENU\n");
-        printf("==============================\n");
         printf("1 - Cadastrar produto\n");
         printf("2 - Listar produtos\n");
-        printf("3 - Realizar nova venda\n");
-        printf("4 - Mostrar total de vendas\n");
+        printf("3 - Editar produto\n");
         printf("0 - Sair\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
@@ -134,50 +185,13 @@ int main()
             break;
 
         case 2:
-            printf("\n=== LISTA DE PRODUTOS ===\n");
+            printf("\nLista de produtos cadastrados no sistema:\n");
 
             listarProdutos(produtos, &totalProdutos);
             break;
 
-        case 3: {
-
-            double valorCompra = 0;
-
-            printf("Insira o valor da compra:\nR$ ");
-            scanf("%lf", &valorCompra);
-            limparBufferDeEntrada();
-
-            int opcao;
-            printf("\nForma de pagamento:\n");
-            printf("1 - Dinheiro\n");
-            printf("2 - Cartao (Debito)\n");
-            printf("3 - Cartao (Credito)\n");
-            scanf("%d", &opcao);
-
-            switch (opcao)
-            {
-            case 1:
-            {
-                pagamentoDinheiro(valorCompra);
-                break;
-            }
-
-            case 2:
-                printf("\nPagamento no débito realizado com sucesso.\n");
-                break;
-
-            case 3:
-                printf("\nPagamento no crédito realizado com sucesso.\n");
-                break;
-
-            default:
-                printf("\nOpção inválida.\n");
-                break;
-            }
-            break; }
-
-        case 4:
-            printf("\nFunção de total de vendas ainda não implementada.\n");
+        case 3:
+            editarProdutos(produtos, &totalProdutos);
             break;
 
         case 0:
@@ -191,5 +205,4 @@ int main()
     } while (opcao != 0);
 
     return 0;
-
 }
