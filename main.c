@@ -49,7 +49,7 @@ void cadastrarProduto(struct produto *produtos, int *total)
             scanf("%d", &produtos[*total].quantidade);
             limparBufferDeEntrada();
 
-            (*total)++; // incrementa o total
+            (*total)++;
             printf("\n Produto cadastrado com sucesso!\n");
             break;
 
@@ -263,3 +263,4 @@ int main()
 
     return 0;
 }
+
