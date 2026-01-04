@@ -15,7 +15,7 @@ struct produto
 {
     char nome[50];
     double preco;
-    int ref[4];
+    int ref;
     int quantidade;
 };
 
@@ -63,7 +63,8 @@ void cadastrarProduto(struct produto *produtos, int *total)
     } while (opcao != 2);
 }
 
-void listarProdutos(struct produto *produtos, int *total){
+void listarProdutos(struct produto *produtos, int *total)
+{
     for (int i = 0; i < *total; i++)
     {
         printf("Nome: %s\n", produtos[i].nome);
@@ -73,11 +74,19 @@ void listarProdutos(struct produto *produtos, int *total){
     }
 }
 
-void editarProdutos(struct produto *produtos, int *total){
+void editarProdutos(struct produto *produtos, int *total)
+{
     int escolhaProduto;
 
-    for(int i = 0; i < *total; i++){
-        printf("Produto: %d", i);
+    if (*total == 0)
+    {
+        printf("Nenhum produto cadastrado.\n");
+        return;
+    }
+
+    for (int i = 0; i < *total; i++)
+    {
+        printf("Produto: %d\n", i);
         printf("Nome: %s\n", produtos[i].nome);
         printf("Referencia: %d\n", produtos[i].ref);
     }
@@ -87,18 +96,17 @@ void editarProdutos(struct produto *produtos, int *total){
     limparBufferDeEntrada();
 
     if (escolhaProduto >= 0 && escolhaProduto < *total)
-    {   
+    {
         int escolhaEdicao;
-        printf("Você escolheu o produto: %d - %s\n Quantidade: %d\n Preco: %f", produtos[escolhaProduto].ref, 
-        produtos[escolhaProduto].nome, 
-        produtos[escolhaProduto].quantidade, 
-        produtos[escolhaProduto].preco);
+        printf("Você escolheu o produto: %d - %s\n Quantidade: %d\n Preco: %f", produtos[escolhaProduto].ref,
+               produtos[escolhaProduto].nome,
+               produtos[escolhaProduto].quantidade,
+               produtos[escolhaProduto].preco);
 
         printf("\n");
         printf("O que deseja atualizar?\n 1. Nome \n 2. Quantidade \n 3. Preco \n 4. ref \n 5. Editar todos");
         scanf("%d", &escolhaEdicao);
         limparBufferDeEntrada();
-
 
         switch (escolhaEdicao)
         {
@@ -113,19 +121,19 @@ void editarProdutos(struct produto *produtos, int *total){
             printf("Quantidade atual: %d\n", produtos[escolhaProduto].quantidade);
             printf("Nova quantidade: \n");
             scanf("%d", &produtos[escolhaProduto].quantidade);
-            limparBufferDeEntrada(); 
+            limparBufferDeEntrada();
             break;
         case 3:
             printf("Preco atual: %f\n", produtos[escolhaProduto].preco);
             printf("Novo preco: \n");
             scanf("%lf", &produtos[escolhaProduto].preco);
-            limparBufferDeEntrada(); 
+            limparBufferDeEntrada();
             break;
         case 4:
             printf("REF atual: %d\n", produtos[escolhaProduto].ref);
             printf("Nova REF: \n");
             scanf("%d", &produtos[escolhaProduto].ref);
-            limparBufferDeEntrada(); 
+            limparBufferDeEntrada();
             break;
         case 5:
             printf("Nome atual: %s\n", produtos[escolhaProduto].nome);
@@ -136,27 +144,72 @@ void editarProdutos(struct produto *produtos, int *total){
             printf("Quantidade atual: %d\n", produtos[escolhaProduto].quantidade);
             printf("Nova quantidade: \n");
             scanf("%d", &produtos[escolhaProduto].quantidade);
-            limparBufferDeEntrada(); 
+            limparBufferDeEntrada();
 
             printf("Preco atual: %f\n", produtos[escolhaProduto].preco);
             printf("Novo preco: \n");
             scanf("%lf", &produtos[escolhaProduto].preco);
-            limparBufferDeEntrada(); 
+            limparBufferDeEntrada();
 
             printf("REF atual: %d\n", produtos[escolhaProduto].ref);
             printf("Nova REF: \n");
             scanf("%d", &produtos[escolhaProduto].ref);
-            limparBufferDeEntrada(); 
+            limparBufferDeEntrada();
             break;
-        
+
         default:
-        printf("Opcao invalida.\n");
+            printf("Opcao invalida.\n");
             break;
         }
-    } else {
+    }
+    else
+    {
         printf("Opcao invalida.\n");
     }
+}
 
+void deletarProdutos(struct produto *produtos, int *total)
+{
+    int escolhaProduto;
+
+    if (*total == 0)
+    {
+        printf("Nenhum produto cadastrado.\n");
+        return;
+    }
+
+    for (int i = 0; i < *total; i++)
+    {
+        printf("Produto: %d\n", i);
+        printf("Nome: %s\n", produtos[i].nome);
+        printf("Referencia: %d\n", produtos[i].ref);
+    }
+
+    printf("\nSelecione o produto por indice que deseja deletar: \n");
+    scanf("%d", &escolhaProduto);
+    limparBufferDeEntrada();
+
+    if (escolhaProduto < 0 || escolhaProduto >= *total)
+    {
+        printf("Indice invalido!\n");
+        return;
+    }
+
+    char confirmacao;
+    printf("Tem certeza? (s/n): \n");
+    scanf(" %c", &confirmacao);
+    limparBufferDeEntrada();
+    if (confirmacao != 's' && confirmacao != 'S')
+    {
+        printf("Operacao cancelada. \n");
+        return;
+    }
+    for (int i = escolhaProduto; i < *total - 1; i++)
+    {
+        produtos[i] = produtos[i + 1];
+    }
+    (*total)--;
+    printf("Produto deletado com sucesso!\n");
 }
 
 int main()
@@ -165,14 +218,14 @@ int main()
 
     struct produto produtos[MAX_PRODUTOS];
     int totalProdutos = 0;
-    int total = 0;
     int opcao;
 
     do
     {
         printf("1 - Cadastrar produto\n");
         printf("2 - Listar produtos\n");
-        printf("3 - Editar produto\n");
+        printf("3 - Atualizar produto\n");
+        printf("4 - Deletar produto\n");
         printf("0 - Sair\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
@@ -192,6 +245,10 @@ int main()
 
         case 3:
             editarProdutos(produtos, &totalProdutos);
+            break;
+
+        case 4:
+            deletarProdutos(produtos, &totalProdutos);
             break;
 
         case 0:
