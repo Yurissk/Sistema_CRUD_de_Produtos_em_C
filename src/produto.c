@@ -107,6 +107,9 @@ void cadastrarProduto(Produto **produtos, int *total, int *capacidade)
 
 void listarProdutos(Produto *produtos, int total)
 {
+    printf("\n");
+    printf("\n___Produtos Cadastrados____\n");
+
     for (int i = 0; i < total; i++)
     {
         printf("Nome: %s\n", produtos[i].nome);
@@ -128,9 +131,11 @@ void editarProdutos(Produto *produtos, int *total)
         return;
     }
 
+    printf("\n___Produtos Cadastrados____\n");
+
     for (int i = 0; i < *total; i++)
     {
-        printf("\n___Produtos Cadastrados____\n");
+        
         printf("Indice - %d\n", i);
         printf("Nome: %s\n", produtos[i].nome);
         printf("Preco: %.2f\n", produtos[i].preco);
@@ -176,10 +181,11 @@ void deletarProdutos(Produto *produtos, int *total)
         printf("Nenhum produto cadastrado.\n");
         return;
     }
+    
+    printf("\n___Produtos Cadastrados____\n");
 
     for (int i = 0; i < *total; i++)
     {
-        printf("\n___Produtos Cadastrados____\n");
         printf("Indice - %d\n", i);
         printf("Nome: %s\n", produtos[i].nome);
         printf("Preco: %.2f\n", produtos[i].preco);
