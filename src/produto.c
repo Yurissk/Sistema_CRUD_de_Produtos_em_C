@@ -9,7 +9,8 @@ void limparBufferDeEntrada(void)
         ;
 }
 
-void verificarCapacidade(Produto **produtos, int *total, int *capacidade){
+void verificarCapacidade(Produto **produtos, int *total, int *capacidade)
+{
     if (*total >= *capacidade)
     {
         /*
@@ -45,7 +46,8 @@ void cadastrarProduto(Produto **produtos, int *total, int *capacidade)
         printf("2 - Sair para o Menu principal\n");
         printf("Escolha: ");
 
-        if (scanf("%d", &opcao) != 1){
+        if (scanf("%d", &opcao) != 1)
+        {
             printf("Entrada invalida! Digite um numero.\n");
             limparBufferDeEntrada();
             continue;
@@ -53,9 +55,10 @@ void cadastrarProduto(Produto **produtos, int *total, int *capacidade)
 
         limparBufferDeEntrada();
 
-        switch (opcao){
+        switch (opcao)
+        {
 
-            case 1:
+        case 1:
 
             verificarCapacidade(produtos, total, capacidade);
             printf("\n---Novo Produto---\n");
@@ -78,20 +81,21 @@ void cadastrarProduto(Produto **produtos, int *total, int *capacidade)
 
             (*total)++;
 
-            for(int i = 0; i < *total; i++){
+            for (int i = 0; i < *total; i++)
+            {
                 printf("\n___Lista atualizada____\n");
-                printf("Nome: %s\n"), (*produtos)[i].nome;
-                printf("Preco: %.2f\n"), (*produtos)[i].preco;
-                printf("Referencia: %d\n"), (*produtos)[i].ref;
-                printf("Quantidade: %d\n"), (*produtos)[i].quantidade;
+                printf("Nome: %s\n", (*produtos)[i].nome);
+                printf("Preco: %.2f\n", (*produtos)[i].preco);
+                printf("Referencia: %d\n", (*produtos)[i].ref);
+                printf("Quantidade: %d\n", (*produtos)[i].quantidade);
             }
 
-                break;
-            case 2: 
-                printf("\nRetornando ao menu principal!\n");
-                break;
-            default:
-                printf("Opcao invalida!\n");
+            break;
+        case 2:
+            printf("\nRetornando ao menu principal!\n");
+            break;
+        default:
+            printf("Opcao invalida!\n");
         }
 
     } while (opcao != 2);
@@ -122,7 +126,16 @@ void editarProdutos(Produto *produtos, int *total)
         return;
     }
 
-    printf("Indice do produto: \n");
+    for (int i = 0; i < *total; i++)
+    {
+        printf("\n___Lista atualizada____\n");
+        printf("Nome: %s\n", produtos[i].nome);
+        printf("Preco: %.2f\n", produtos[i].preco);
+        printf("Referencia: %d\n", produtos[i].ref);
+        printf("Quantidade: %d\n", produtos[i].quantidade);
+    }
+
+    printf("\nIndice do produto: \n");
     scanf("%d", &idx);
     limparBufferDeEntrada();
 
@@ -161,7 +174,16 @@ void deletarProdutos(Produto *produtos, int *total)
         return;
     }
 
-    printf("Indice do produto: ");
+    for (int i = 0; i < *total; i++)
+    {
+        printf("\n___Lista atualizada____\n");
+        printf("Nome: %s\n", produtos[i].nome);
+        printf("Preco: %.2f\n", produtos[i].preco);
+        printf("Referencia: %d\n", produtos[i].ref);
+        printf("Quantidade: %d\n", produtos[i].quantidade);
+    }
+
+    printf("\nIndice do produto: \n");
     scanf("%d", &idx);
     limparBufferDeEntrada();
 

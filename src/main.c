@@ -6,8 +6,10 @@ int main(void)
 {
     setlocale(LC_ALL, "Portuguese");
 
-    Produto produtos[MAX_PRODUTOS];
-    int totalProdutos = 0;
+    Produto *produtos = NULL;
+
+    int total = 0;
+    int capacidade = 0;
     int opcao;
 
     do
@@ -23,16 +25,16 @@ int main(void)
         switch (opcao)
         {
         case 1:
-            cadastrarProduto(produtos, &totalProdutos);
+            cadastrarProduto(&produtos, &total, &capacidade);
             break;
         case 2:
-            listarProdutos(produtos, totalProdutos);
+            listarProdutos(produtos, total);
             break;
         case 3:
-            editarProdutos(produtos, &totalProdutos);
+            editarProdutos(produtos, total);
             break;
         case 4:
-            deletarProdutos(produtos, &totalProdutos);
+            deletarProdutos(produtos, total);
             break;
         }
     } while (opcao != 0);

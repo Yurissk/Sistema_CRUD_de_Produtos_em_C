@@ -13,7 +13,9 @@ typedef struct produto
 
 void limparBufferDeEntrada(void);
 
-void cadastrarProduto(Produto *produtos, int *total);
+void verificarCapacidade(Produto **produtos, int *total, int *capacidade);
+
+void cadastrarProduto(Produto **produtos, int *total, int *capacidade);
 
 void listarProdutos(Produto *produtos, int total);
 
