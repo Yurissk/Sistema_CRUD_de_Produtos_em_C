@@ -63,7 +63,7 @@ void editarProdutos(Produto *produtos, int *total)
         return;
     }
 
-    printf("Indice do produto: ");
+    printf("Indice do produto: \n");
     scanf("%d", &idx);
     limparBufferDeEntrada();
 
