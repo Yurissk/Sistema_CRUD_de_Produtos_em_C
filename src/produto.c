@@ -5,7 +5,8 @@
 void limparBufferDeEntrada(void)
 {
     int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
 }
 
 void cadastrarProduto(Produto *produtos, int *total)
@@ -40,6 +41,8 @@ void cadastrarProduto(Produto *produtos, int *total)
         }
 
     } while (opcao != 2);
+
+    printf("\n");
 }
 
 void listarProdutos(Produto *produtos, int total)
@@ -50,6 +53,8 @@ void listarProdutos(Produto *produtos, int total)
         printf("Preco: %.2f\n", produtos[i].preco);
         printf("Ref: %d\n", produtos[i].ref);
         printf("Qtd: %d\n\n", produtos[i].quantidade);
+
+        printf("\n");
     }
 }
 
@@ -66,6 +71,8 @@ void editarProdutos(Produto *produtos, int *total)
     printf("Indice do produto: \n");
     scanf("%d", &idx);
     limparBufferDeEntrada();
+
+    printf("\n");
 
     if (idx < 0 || idx >= *total)
     {
@@ -86,6 +93,8 @@ void editarProdutos(Produto *produtos, int *total)
     printf("Nova ref: ");
     scanf("%d", &produtos[idx].ref);
     limparBufferDeEntrada();
+
+    printf("\n");
 }
 
 void deletarProdutos(Produto *produtos, int *total)
@@ -112,4 +121,6 @@ void deletarProdutos(Produto *produtos, int *total)
         produtos[i] = produtos[i + 1];
 
     (*total)--;
+
+    printf("\n");
 }
