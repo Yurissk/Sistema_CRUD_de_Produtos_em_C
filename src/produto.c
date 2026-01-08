@@ -26,10 +26,10 @@ void cadastrarProduto(Produto *produtos, int *total)
             fgets(produtos[*total].nome, sizeof(produtos[*total].nome), stdin);
             produtos[*total].nome[strcspn(produtos[*total].nome, "\n")] = '\0';
 
-            printf("Preço: ");
+            printf("Preco: ");
             scanf("%lf", &produtos[*total].preco);
 
-            printf("Referência: ");
+            printf("Referencia: ");
             scanf("%d", &produtos[*total].ref);
 
             printf("Quantidade: ");
@@ -47,7 +47,7 @@ void listarProdutos(Produto *produtos, int total)
     for (int i = 0; i < total; i++)
     {
         printf("Nome: %s\n", produtos[i].nome);
-        printf("Preço: %.2f\n", produtos[i].preco);
+        printf("Preco: %.2f\n", produtos[i].preco);
         printf("Ref: %d\n", produtos[i].ref);
         printf("Qtd: %d\n\n", produtos[i].quantidade);
     }
