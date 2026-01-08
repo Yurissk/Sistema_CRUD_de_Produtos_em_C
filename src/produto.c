@@ -9,35 +9,89 @@ void limparBufferDeEntrada(void)
         ;
 }
 
-void cadastrarProduto(Produto *produtos, int *total)
+void verificarCapacidade(Produto **produtos, int *total, int *capacidade){
+    if (*total >= *capacidade)
+    {
+        /*
+        Se capacidade for 0, começa com 10
+        caso contrario, dobra de tamanho
+        */
+        int novaCapacidade = (*capacidade == 0) ? 10 : (*capacidade * 2);
+
+        printf("\n[Aviso] Aumentando Capacidade de %d para %d clientes\n", *capacidade, novaCapacidade);
+
+        Produto *temp = realloc(*produtos, novaCapacidade * sizeof(Produto));
+
+        if (temp == NULL)
+        {
+            printf("Erro critico: memoria insuficiente");
+            free(*produtos);
+            exit(1);
+        }
+
+        *produtos = temp;
+        *capacidade = novaCapacidade;
+    }
+}
+
+void cadastrarProduto(Produto **produtos, int *total, int *capacidade)
 {
     int opcao;
+    char buffer[50];
 
     do
     {
         printf("1 - Cadastrar novo produto\n");
         printf("2 - Sair para o Menu principal\n");
         printf("Escolha: ");
-        scanf("%d", &opcao);
+
+        if (scanf("%d", &opcao) != 1){
+            printf("Entrada invalida! Digite um numero.\n");
+            limparBufferDeEntrada();
+            continue;
+        }
+
         limparBufferDeEntrada();
 
-        if (opcao == 1)
-        {
+        switch (opcao){
+
+            case 1:
+
+            verificarCapacidade(produtos, total, capacidade);
+            printf("\n---Novo Produto---\n");
+
             printf("Nome: ");
-            fgets(produtos[*total].nome, sizeof(produtos[*total].nome), stdin);
-            produtos[*total].nome[strcspn(produtos[*total].nome, "\n")] = '\0';
+            fgets((*produtos)[*total].nome, sizeof((*produtos)[*total].nome), stdin);
+            (*produtos)[*total].nome[strcspn((*produtos)[*total].nome, "\n")] = '\0';
 
             printf("Preco: ");
-            scanf("%lf", &produtos[*total].preco);
+            fgets(buffer, sizeof(buffer), stdin);
+            (*produtos)[*total].preco = strtod(buffer, NULL);
 
             printf("Referencia: ");
-            scanf("%d", &produtos[*total].ref);
+            fgets(buffer, sizeof(buffer), stdin);
+            (*produtos)[*total].ref = (int)strtol(buffer, NULL, 10);
 
             printf("Quantidade: ");
-            scanf("%d", &produtos[*total].quantidade);
-            limparBufferDeEntrada();
+            fgets(buffer, sizeof(buffer), stdin);
+            (*produtos)[*total].quantidade = (int)strtol(buffer, NULL, 10);
 
             (*total)++;
+
+            for(int i = 0; i < *total; i++){
+                printf("\n___Lista atualizada____\n");
+                printf("Nome: %s\n"), (*produtos)[i].nome;
+                printf("Preco: %.2f\n"), (*produtos)[i].preco;
+                printf("Referencia: %d\n"), (*produtos)[i].ref;
+                printf("Quantidade: %d\n"), (*produtos)[i].quantidade;
+            }
+
+                break;
+            case 2: 
+                printf("\nRetornando ao menu principal!\n");
+                break;
+            default:
+                printf("Opcao invalida!\n");
         }
 
     } while (opcao != 2);
