@@ -31,10 +31,10 @@ int main(void)
             listarProdutos(produtos, total);
             break;
         case 3:
-            editarProdutos(produtos, total);
+            editarProdutos(produtos, &total);
             break;
         case 4:
-            deletarProdutos(produtos, total);
+            deletarProdutos(produtos, &total);
             break;
         }
     } while (opcao != 0);

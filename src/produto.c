@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "produto.h"
 
 void limparBufferDeEntrada(void)
@@ -129,7 +130,8 @@ void editarProdutos(Produto *produtos, int *total)
 
     for (int i = 0; i < *total; i++)
     {
-        printf("\n___Lista atualizada____\n");
+        printf("\n___Produtos Cadastrados____\n");
+        printf("Indice - %d\n", i);
         printf("Nome: %s\n", produtos[i].nome);
         printf("Preco: %.2f\n", produtos[i].preco);
         printf("Referencia: %d\n", produtos[i].ref);
@@ -177,7 +179,8 @@ void deletarProdutos(Produto *produtos, int *total)
 
     for (int i = 0; i < *total; i++)
     {
-        printf("\n___Lista atualizada____\n");
+        printf("\n___Produtos Cadastrados____\n");
+        printf("Indice - %d\n", i);
         printf("Nome: %s\n", produtos[i].nome);
         printf("Preco: %.2f\n", produtos[i].preco);
         printf("Referencia: %d\n", produtos[i].ref);
