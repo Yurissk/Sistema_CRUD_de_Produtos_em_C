@@ -19,7 +19,7 @@ void verificarCapacidade(Produto **produtos, int *total, int *capacidade)
         */
         int novaCapacidade = (*capacidade == 0) ? 10 : (*capacidade * 2);
 
-        printf("\n[Aviso] Aumentando Capacidade de %d para %d clientes\n", *capacidade, novaCapacidade);
+        printf("\n[Aviso] Aumentando Capacidade de %d para %d produtos\n", *capacidade, novaCapacidade);
 
         Produto *temp = realloc(*produtos, novaCapacidade * sizeof(Produto));
 
@@ -42,6 +42,7 @@ void cadastrarProduto(Produto **produtos, int *total, int *capacidade)
 
     do
     {
+        printf("\n");
         printf("1 - Cadastrar novo produto\n");
         printf("2 - Sair para o Menu principal\n");
         printf("Escolha: ");
